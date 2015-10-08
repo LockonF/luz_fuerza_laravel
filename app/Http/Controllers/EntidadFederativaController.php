@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EntidadFederativa;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -23,26 +24,6 @@ class EntidadFederativaController extends Controller
             ],200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
@@ -52,40 +33,53 @@ class EntidadFederativaController extends Controller
      */
     public function show($id)
     {
-        //
+        $entidadFederativa = EntidadFederativa::where('id',$id)->first();
+        if(!is_null($entidadFederativa))
+        {
+            return response()->json(
+                [
+                    "msg"=>"success",
+                    "entidadFederativa"=>$entidadFederativa->toArray()
+                ],200);
+        }
+        else{
+            return request()->json('entidad_federativa_not_found',404);
+        }
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Muestra Los Municipios asociados a la EntidadFederativa
      */
-    public function edit($id)
+
+    public function showMunicipios($id)
     {
-        //
+        $entidadFederativa = EntidadFederativa::where('id',$id)->first();
+        $entidadFederativa->load('Municipios');
+        if(!is_null($entidadFederativa))
+        {
+            return response()->json(
+                [
+                    "msg"=>"success",
+                    "entidadFederativa"=>$entidadFederativa->toArray()
+                ],200);
+        }
+        else{
+            return response()->json('entidad_federativa_not_found',404);
+        }
+
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Muestra La Informacion con Localidades
      */
-    public function update(Request $request, $id)
+    public function showWithLocalidades($id)
     {
-        //
+       $entidadFederativa = EntidadFederativa::with('Municipio')->where('id',$id)->first();
+
+
+
+        return response()->json(['msg'=>'success','entidadFederativa'=>$entidadFederativa->toArray()]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+
 }

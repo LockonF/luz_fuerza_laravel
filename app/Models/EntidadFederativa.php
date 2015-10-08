@@ -18,4 +18,15 @@ class EntidadFederativa extends Model
     {
         return $this->hasOne('App\Models\EntidadFederativa','idEntidadFederativa');
     }
+
+    public function Municipios()
+    {
+        return $this->hasMany('App\Models\Municipio','idEstado');
+    }
+
+    public function Localidades()
+    {
+        return $this->hasManyThrough('App\Models\Localidad','App\Models\Municipio','idEstado','idMunicipio');
+    }
+
 }

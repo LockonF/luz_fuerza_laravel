@@ -48,6 +48,18 @@ Route::group(['prefix' => 'api'], function()
     Route::delete('ExperienciaLaboral/{id}','ExperienciaLaboralController@destroy');
 
 
+    //Entidad Federativa
     Route::get('EntidadFederativa',"EntidadFederativaController@index");
+    Route::get('EntidadFederativa/{id}',"EntidadFederativaController@show");
+    Route::get('EntidadFederativa/All/{id}',"EntidadFederativaController@showWithLocalidades");
+    Route::get('EntidadFederativa/Municipios/{id}',"EntidadFederativaController@showMunicipios");
+
+    //Municipios
+    Route::get('Municipio/{id}',"MunicipioController@show");
+    Route::get('Municipio/Estado/{id}',"MunicipioController@showByEstado");
+
+    //Localidades
+
+
 });
 
