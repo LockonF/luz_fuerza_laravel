@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+
 use Illuminate\Database\Eloquent\Model;
 
 class Municipio extends Model
@@ -11,11 +12,11 @@ class Municipio extends Model
 
     public function EntidadFederativa()
     {
-        return $this->belongsTo('App\Model\EntidadFederativa','idEstado');
+        return $this->belongsTo('App\Models\EntidadFederativa','idEstado');
     }
 
     public function Localidades()
     {
-        return $this->hasMany('App\Model\Localidad','idMunicipio');
+        return $this->hasMany('App\Models\Localidad','idMunicipio');
     }
 }

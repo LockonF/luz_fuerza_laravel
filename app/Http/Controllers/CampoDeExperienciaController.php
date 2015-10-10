@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CampoDeExperiencia;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\Pais;
 
-class PaisController extends Controller
+class CampoDeExperienciaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,12 +16,7 @@ class PaisController extends Controller
      */
     public function index()
     {
-        $paises = \App\Models\Pais::with('EntidadesFederativas')->get();
-        return response()->json(
-            [
-                "msg"=>"success",
-                "paises"=>$paises->toArray()
-            ],200);
+        //
     }
 
     /**
@@ -31,7 +26,7 @@ class PaisController extends Controller
      */
     public function create()
     {
-
+        //
     }
 
     /**
@@ -42,9 +37,6 @@ class PaisController extends Controller
      */
     public function store(Request $request)
     {
-
-        $pais = \App\Models\Pais();
-        $pais->nombre = $request->nombre;
         //
     }
 
@@ -57,14 +49,14 @@ class PaisController extends Controller
     public function show($id)
     {
 
-        $pais = Pais::find($id);
-        $pais->load(['EntidadesFederativas.Municipios'=>function($q) use (&$Municipios){
-            $Municipios = $q->get()->unique();
-    }]);
+        $campo = CampoDeExperiencia::find($id);
+        $campo->load(['AreaDeExperiencia.ExperienciaEspecifica'=>function($q) use (&$ExperienciaEspecifica){
+            $ExperienciaEspecifica = $q->get()->unique();
+        }]);
         return response()->json(
             [
                 "msg"=>"success",
-                "pais"=>$pais->toArray()
+                "campo_de_experiencia"=>$campo->toArray()
             ],200);
     }
 

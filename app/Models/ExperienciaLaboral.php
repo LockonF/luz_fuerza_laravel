@@ -8,7 +8,7 @@ class ExperienciaLaboral extends Model
 {
     protected $table = 'ExperienciaLaboral';
     protected $fillable =
-        ['idEmpleado','idEntidadFederativa','NombreInstitucion','CampoDeExperiencia','AreaDeExperiencia','Jerarquia',
+        ['idUsuario','idEntidadFederativa','idExperienciaEspecifica','NombreInstitucion','CampoDeExperiencia','AreaDeExperiencia','Jerarquia',
         'NombreDelPuesto','RemuneracionBrutaMensual','FechaInicio','FechaTermino','NombreSuperiorInmediato','ApellidoPSuperiorInmediato',
         'ApellidoMSuperiorInmediato','TelefonoSuperiorInmediato'];
 
@@ -20,6 +20,11 @@ class ExperienciaLaboral extends Model
 
     public function EntidadFederativa(){
         return $this->belongsTo('\App\Model\EntidadFederativa','idEntidadFederativa');
+    }
+
+    public function ExperienciaEspecifica()
+    {
+        return $this->belongsTo('\App\Model\ExperienciaEspecifica','idExperienciaEspecifica');
     }
 
 
