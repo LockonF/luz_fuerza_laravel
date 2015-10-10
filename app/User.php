@@ -55,5 +55,15 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasMany('App\Models\ExperienciaLaboral','idUsuario');
     }
 
+    /**
+     *
+     */
+
+    public function Idiomas()
+    {
+        return $this->belongsToMany('App\Models\Idioma', 'IdiomaUsuario', 'idEmpleado', 'idIdioma')->withPivot('NivelRedaccion','NivelConversacion','NivelLectura','DocumentoAcredita','Materno');
+
+    }
+
 
 }

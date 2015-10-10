@@ -24,9 +24,5 @@ class EntidadFederativa extends Model
         return $this->hasMany('App\Models\Municipio','idEstado');
     }
 
-    public function Localidades()
-    {
-        return $this->hasManyThrough('App\Models\Localidad','App\Models\Municipio','idEstado','idMunicipio');
-    }
 
 }

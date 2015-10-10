@@ -58,7 +58,11 @@ Route::group(['prefix' => 'api'], function()
     Route::get('Municipio/{id}',"MunicipioController@show");
     Route::get('Municipio/Estado/{id}',"MunicipioController@showByEstado");
 
-    //Localidades
+    //Idiomas del Usuario
+    Route::get('IdiomaUsuario','IdiomaUsuarioController@showAll');
+    Route::post('IdiomaUsuario','IdiomaUsuarioController@store');
+    Route::put('IdiomaUsuario','IdiomaUsuarioController@update');
+    Route::delete('IdiomaUsuario/{id}','IdiomaUsuarioController@destroy');
 
 
 });

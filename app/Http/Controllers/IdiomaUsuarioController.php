@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Database\Eloquent\Model;
+
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\App;
 use JWTAuth;
 use Psy\Exception\FatalErrorException;
@@ -9,21 +10,50 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\User;
-use App\Models\DatosPersonales;
 
-class DatosPersonalesController extends Controller
+use App\User;
+use App\Models\Idioma;
+
+class IdiomaUsuarioController extends Controller
 {
+    /**
+     * Función para mostrar todos los idiomas del usuario
+     */
+    public function showAll()
+    {
+        try {
+
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['user_not_found'], 404);
+            }
+
+        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+
+            return response()->json(['token_expired'], $e->getStatusCode());
+
+        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+
+            return response()->json(['token_invalid'], $e->getStatusCode());
+
+        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
+
+            return response()->json(['token_absent'], $e->getStatusCode());
+
+        }
+
+        $user->load('Idiomas');
+        return response()->json([
+            'idiomas'=> $user->Idiomas->toArray()
+        ],200);
+
+    }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Función para grabar un nuevo registro de Idioma
      */
+
     public function store(Request $request)
     {
-
         try {
 
             if (! $user = JWTAuth::parseToken()->authenticate()) {
@@ -44,73 +74,31 @@ class DatosPersonalesController extends Controller
 
         }
 
-    try{
-
-        $datosPersonales = new DatosPersonales($request->all());
-        return $user->DatosPersonales()->save($datosPersonales);
-
-    }catch (FatalErrorException $e)
-    {
-        return response()->json('Internal Server Error',500);
-    }
+        $requestData = $request->all();
+        $requestData['idUser'] =$user->id;
+        $idiomas = User::whereHas('Idiomas', function ($q) use ($requestData) {
+            $q->where('idIdioma',$requestData['idIdioma'])
+            ->where('idEmpleado',$requestData['idUser']);
+        })->get();
 
 
-
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show()
-    {
-        try {
-
-            if (! $user = JWTAuth::parseToken()->authenticate()) {
-                return response()->json(['user_not_found'], 404);
-            }
-
-        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
-
-            return response()->json(['token_expired'], $e->getStatusCode());
-
-        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-
-            return response()->json(['token_invalid'], $e->getStatusCode());
-
-        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
-
-            return response()->json(['token_absent'], $e->getStatusCode());
-
-        }
-
-        $datosPersonales = DatosPersonales::where('idUsuario',$user->id)->first();
-        if(!is_null($datosPersonales))
+        if($idiomas->isEmpty())
         {
-            return response()->json([
-                'datosPersonales'=> $datosPersonales->toArray()
-            ],200);
-
+            $user->Idiomas()->save(Idioma::find($requestData['idIdioma']),$request->all());
+            return response()->json(['success'],200);
         }
         else
         {
-            return response()->json([
-                'datos_personales_not_found'
-            ],404);
-
+            return response()->json(['Idioma Ya Existente'],500);
         }
+
 
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Función para actualizar un registro de idioma
      */
+
     public function update(Request $request)
     {
         try {
@@ -133,19 +121,27 @@ class DatosPersonalesController extends Controller
 
         }
 
-
-
-        DatosPersonales::where('idUsuario',$user->id)->update($request->all());
-
+        $requestData = $request->all();
+        $requestData['idUser'] =$user->id;
+        $idiomas = User::whereHas('Idiomas', function ($q) use ($requestData) {
+            $q->where('idIdioma',$requestData['idIdioma'])
+                ->where('idEmpleado',$requestData['idUser']);
+        })->get();
+        if($idiomas->isEmpty())
+        {
+            return response()->json(['Idioma no Existente'],500);
+        }
+        else{
+            $user->Idiomas()->updateExistingPivot($requestData['idIdioma'],$request->all());
+            return response()->json(['success'],200);
+        }
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Función Para Eliminar un Registro de Idioma de Usuario
      */
-    public function destroy()
+
+    public function destroy($id)
     {
         try {
 
@@ -167,13 +163,20 @@ class DatosPersonalesController extends Controller
 
         }
 
-        try{
-            $datosPersonales = $user->load('DatosPersonales');
-            $datosPersonales->DatosPersonales->delete();
-
-        }catch (FatalErrorException $e)
+        $requestData ['idIdioma'] = $id;
+        $requestData['idUser'] =$user->id;
+        $idiomas = User::whereHas('Idiomas', function ($q) use ($requestData) {
+            $q->where('idIdioma',$requestData['idIdioma'])
+                ->where('idEmpleado',$requestData['idUser']);
+        })->get();
+        if($idiomas->isEmpty())
         {
-            return response()->json('Internal Server Error',500);
+            return response()->json(['Idioma no Existente'],500);
+        }
+        else{
+            $user->Idiomas()->detach($requestData['idIdioma']);
+            return response()->json(['success'],200);
         }
     }
+
 }
