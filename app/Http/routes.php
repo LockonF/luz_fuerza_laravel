@@ -20,6 +20,11 @@ Route::group(['prefix' => 'api'], function()
     Route::post('authenticate', 'TokenAuthController@authenticate');
     Route::get('authenticate/user', 'TokenAuthController@getAuthenticatedUser');
     Route::post('register', 'TokenAuthController@register');
+
+   //Campos de Experiencia
+    Route::get('CampoDeExperiencia/{id}',"CampoDeExperienciaController@show");
+
+   //Paises
     Route::get('Pais','PaisController@index');
     Route::get('Pais/{id}',"PaisController@show");
     Route::post('Pais',"PaisController@store");
