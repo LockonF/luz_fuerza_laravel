@@ -21,10 +21,10 @@ Route::group(['prefix' => 'api'], function()
     Route::get('authenticate/user', 'TokenAuthController@getAuthenticatedUser');
     Route::post('register', 'TokenAuthController@register');
 
-   //Campos de Experiencia
+    //Campos de Experiencia
     Route::get('CampoDeExperiencia/{id}',"CampoDeExperienciaController@show");
 
-   //Paises
+    //Paises
     Route::get('Pais','PaisController@index');
     Route::get('Pais/{id}',"PaisController@show");
     Route::post('Pais',"PaisController@store");
@@ -52,6 +52,19 @@ Route::group(['prefix' => 'api'], function()
     Route::post('ExperienciaLaboral','ExperienciaLaboralController@store');
     Route::delete('ExperienciaLaboral/{id}','ExperienciaLaboralController@destroy');
 
+    //Certificacion
+    Route::get('Certificacion','CertificacionController@show');
+    Route::get('Certificacion/{id}','CertificacionController@showOne');
+    Route::put('Certificacion/{id}','CertificacionController@update');
+    Route::post('Certificacion','CertificacionController@store');
+    Route::delete('Certificacion/{id}','CertificacionController@destroy');
+
+    //Escolaridad
+    Route::get('Escolaridad','EscolaridadController@show');
+    Route::get('Escolaridad/{id}','EscolaridadController@showOne');
+    Route::put('Escolaridad/{id}','EscolaridadController@update');
+    Route::post('Escolaridad','EscolaridadController@store');
+    Route::delete('Escolaridad/{id}','EscolaridadController@destroy');
 
     //Entidad Federativa
     Route::get('EntidadFederativa',"EntidadFederativaController@index");
@@ -63,6 +76,15 @@ Route::group(['prefix' => 'api'], function()
     Route::get('Municipio/{id}',"MunicipioController@show");
     Route::get('Municipio/Estado/{id}',"MunicipioController@showByEstado");
 
+    //Carrera
+    Route::get('Carrera/{id}',"CarreraController@show");
+    Route::get('Carrrera/Escolaridad/{id}',"CarreraController@showByArea");
+
+    //InstitucionEducativa
+    Route::get('InstitucionEducativa/{id}',"InstitucionEducativaController@show");
+    Route::get('InstitucionEducativa/Escolaridad/{id}',"InstitucionEducativaController@showByArea");
+
+
     //Idiomas del Usuario
     Route::get('IdiomaUsuario','IdiomaUsuarioController@showAll');
     Route::post('IdiomaUsuario','IdiomaUsuarioController@store');
@@ -71,4 +93,3 @@ Route::group(['prefix' => 'api'], function()
 
 
 });
-

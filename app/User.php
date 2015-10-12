@@ -11,8 +11,8 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
 class User extends Model implements AuthenticatableContract,
-                                    AuthorizableContract,
-                                    CanResetPasswordContract
+    AuthorizableContract,
+    CanResetPasswordContract
 {
     use Authenticatable, Authorizable, CanResetPassword;
 
@@ -53,6 +53,20 @@ class User extends Model implements AuthenticatableContract,
     public function ExperienciaLaboral()
     {
         return $this->hasMany('App\Models\ExperienciaLaboral','idUsuario');
+    }
+    /**
+     *
+     */
+    public function Certificacion()
+    {
+        return $this->hasMany('App\Models\Certificacion','idUsuario');
+    }
+    /**
+     *
+     */
+    public function Escolaridad()
+    {
+        return $this->hasMany('App\Models\Escolaridad','idUsuario');
     }
 
     /**
