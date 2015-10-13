@@ -14,4 +14,6 @@ class DatosPersonales extends Model
         return $this->belongsTo('\App\User','idUsuario');
     }
 
+
+
 }

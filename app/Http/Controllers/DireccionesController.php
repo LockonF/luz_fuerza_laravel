@@ -100,6 +100,51 @@ class DireccionesController extends Controller
     }
 
     /**
+     * Muestra la dirección de un usuario en específico
+     * @param String $id
+     */
+
+    public function showOne($id)
+    {
+        try {
+
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['user_not_found'], 404);
+            }
+
+        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+
+            return response()->json(['token_expired'], $e->getStatusCode());
+
+        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+
+            return response()->json(['token_invalid'], $e->getStatusCode());
+
+        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
+
+            return response()->json(['token_absent'], $e->getStatusCode());
+
+        }
+
+        if($user->tipo=='Admin')
+        {
+            $direccion = Direccion::where('idUsuario',$user->id)->first();
+            return response()->json([
+                'msg'=>'success',
+                'direccion'=>$direccion->toArray()
+            ],200);
+        }
+
+        return response()->json([
+            'Forbidden, only Admin'
+        ],403);
+
+
+    }
+
+
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -135,7 +180,7 @@ class DireccionesController extends Controller
         if(!is_null($direccion))
         {
             $direccion = Direccion::where('idUsuario',$user->id)->update($request->all());
-            return response()->json(['msg'=>'success'],200);
+            return response()->json('success',200);
         }
         else
         {
@@ -176,6 +221,7 @@ class DireccionesController extends Controller
         try{
             $direccion = $user->load('Direccion');
             $direccion->Direccion->delete();
+            return response()->json('success',200);
 
         }catch (FatalErrorException $e)
         {

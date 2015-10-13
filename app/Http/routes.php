@@ -18,7 +18,7 @@ Route::get('/', function () {
 Route::group(['prefix' => 'api'], function()
 {
     Route::post('authenticate', 'TokenAuthController@authenticate');
-    Route::get('authenticate/user', 'TokenAuthController@getAuthenticatedUser');
+    Route::get('authenticate', 'TokenAuthController@getAuthenticatedUser');
     Route::post('register', 'TokenAuthController@register');
 
     //Campos de Experiencia
@@ -33,12 +33,13 @@ Route::group(['prefix' => 'api'], function()
 
 
     //Datos Personales de Usuario
-    Route::get('DatosPersonales','DatosPersonalesController@show');
+    Route::get('DatosPersonales/{id}','DatosPersonalesController@show');
     Route::put('DatosPersonales','DatosPersonalesController@update');
     Route::post('DatosPersonales','DatosPersonalesController@store');
     Route::delete('DatosPersonales','DatosPersonalesController@destroy');
 
     //Direccion de Usuario
+    Route::get('Direccion/{id}','DireccionesController@showOne');
     Route::get('Direccion','DireccionesController@show');
     Route::put('Direccion','DireccionesController@update');
     Route::post('Direccion','DireccionesController@store');
@@ -91,5 +92,9 @@ Route::group(['prefix' => 'api'], function()
     Route::put('IdiomaUsuario','IdiomaUsuarioController@update');
     Route::delete('IdiomaUsuario/{id}','IdiomaUsuarioController@destroy');
 
+
+    //Estadisticas
+    Route::post('Estadisticas/Edades','EstadisticasController@usersByAge');
+    Route::post('Estadisticas/Ubicacion','EstadisticasController@usersByLocation');
 
 });

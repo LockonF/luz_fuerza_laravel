@@ -46,6 +46,7 @@ class DatosPersonalesController extends Controller
 
     try{
 
+
         $datosPersonales = new DatosPersonales($request->all());
         return $user->DatosPersonales()->save($datosPersonales);
 
@@ -64,7 +65,7 @@ class DatosPersonalesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
         try {
 
@@ -86,19 +87,30 @@ class DatosPersonalesController extends Controller
 
         }
 
-        $datosPersonales = DatosPersonales::where('idUsuario',$user->id)->first();
-        if(!is_null($datosPersonales))
+        if($user->tipo=='Admin')
         {
-            return response()->json([
-                'datosPersonales'=> $datosPersonales->toArray()
-            ],200);
 
+            $datosPersonales = DatosPersonales::where('idUsuario',$id)->first();
+            if(!is_null($datosPersonales))
+            {
+                return response()->json([
+                    'datosPersonales'=> $datosPersonales->toArray()
+                ],200);
+
+            }
+            else
+            {
+                return response()->json([
+                    'datos_personales_not_found'
+                ],404);
+
+            }
         }
         else
         {
             return response()->json([
-                'datos_personales_not_found'
-            ],404);
+                'Forbidden, only Admin'
+            ],403);
 
         }
 
@@ -170,6 +182,7 @@ class DatosPersonalesController extends Controller
         try{
             $datosPersonales = $user->load('DatosPersonales');
             $datosPersonales->DatosPersonales->delete();
+            return response()->json('success',200);
 
         }catch (FatalErrorException $e)
         {

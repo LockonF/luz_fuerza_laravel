@@ -48,7 +48,7 @@ class InstitucionEducativaController extends Controller
         $institucionEducativa = \App\Models\InstitucionEducativa();
         $institucionEducativa->nombre = $request->nombre;
         $institucionEducativa->siglas = $request->siglas;
-        $institucionEductiva->tipo = $request->tipo;
+        $institucionEducativa->tipo = $request->tipo;
         //
     }
 
