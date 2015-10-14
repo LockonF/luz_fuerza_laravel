@@ -92,10 +92,16 @@ class DireccionesController extends Controller
         }
 
         $direccion = Direccion::where('idUsuario',$user->id)->first();
-        return response()->json([
-            'msg'=>'success',
-            'direccion'=>$direccion->toArray()
-        ],200);
+        if(!is_null($direccion))
+        {
+            return response()->json([
+                'msg'=>'success',
+                'direccion'=>$direccion->toArray()
+            ],200);
+        }
+        else return response()->json('direccion_not_found',200);
+
+
 
     }
 
