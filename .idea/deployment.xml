@@ -5,7 +5,7 @@
       <paths name="GemaLMS">
         <serverdata>
           <mappings>
-            <mapping deploy="/sme_laravel" local="$PROJECT_DIR$" web="/sme_laravel/public" />
+            <mapping deploy="/luz_fuerza_laravel" local="$PROJECT_DIR$" web="/luz_fuerza_laravel/public" />
           </mappings>
         </serverdata>
       </paths>

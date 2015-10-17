@@ -11,12 +11,15 @@
 |
 */
 
+use Illuminate\Routing\Router;
+
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['prefix' => 'api'], function()
-{
+Route::group(['middleware' => 'cors','prefix' => 'api'], function(Router $router){
+
     Route::post('authenticate', 'TokenAuthController@authenticate');
     Route::get('authenticate', 'TokenAuthController@getAuthenticatedUser');
     Route::post('register', 'TokenAuthController@register');
