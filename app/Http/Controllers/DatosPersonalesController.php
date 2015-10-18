@@ -60,6 +60,52 @@ class DatosPersonalesController extends Controller
     }
 
     /**
+     * Display the specified resource
+     *
+     */
+
+    public function showMyData()
+    {
+        try {
+
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['user_not_found'], 404);
+            }
+
+        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+
+            return response()->json(['token_expired'], $e->getStatusCode());
+
+        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+
+            return response()->json(['token_invalid'], $e->getStatusCode());
+
+        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
+
+            return response()->json(['token_absent'], $e->getStatusCode());
+
+        }
+
+            $datosPersonales = DatosPersonales::where('idUsuario',$user->id)->first();
+            if(!is_null($datosPersonales))
+            {
+                return response()->json([
+                    'datosPersonales'=> $datosPersonales->toArray()
+                ],200);
+
+            }
+            else
+            {
+                return response()->json([
+                    'datos_personales_not_found'
+                ],404);
+
+            }
+
+
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id

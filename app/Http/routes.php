@@ -37,6 +37,7 @@ Route::group(['middleware' => 'cors','prefix' => 'api'], function(Router $router
 
     //Datos Personales de Usuario
     Route::get('DatosPersonales/{id}','DatosPersonalesController@show');
+    Route::get('DatosPersonales','DatosPersonalesController@showMyData');
     Route::put('DatosPersonales','DatosPersonalesController@update');
     Route::post('DatosPersonales','DatosPersonalesController@store');
     Route::delete('DatosPersonales','DatosPersonalesController@destroy');
