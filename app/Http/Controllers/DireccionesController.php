@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
 use JWTAuth;
 use Psy\Exception\FatalErrorException;
-use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions;
 use App\Models\Direccion;
 use App\User;
 use Illuminate\Http\Request;
@@ -30,15 +30,15 @@ class DireccionesController extends Controller
                 return response()->json(['user_not_found'], 404);
             }
 
-        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+        } catch (Exceptions\TokenExpiredException $e) {
 
             return response()->json(['token_expired'], $e->getStatusCode());
 
-        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+        } catch (Exceptions\TokenInvalidException $e) {
 
             return response()->json(['token_invalid'], $e->getStatusCode());
 
-        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
+        } catch (Exceptions\JWTException $e) {
 
             return response()->json(['token_absent'], $e->getStatusCode());
 
@@ -77,15 +77,15 @@ class DireccionesController extends Controller
                 return response()->json(['user_not_found'], 404);
             }
 
-        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+        } catch (Exceptions\TokenExpiredException $e) {
 
             return response()->json(['token_expired'], $e->getStatusCode());
 
-        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+        } catch (Exceptions\TokenInvalidException $e) {
 
             return response()->json(['token_invalid'], $e->getStatusCode());
 
-        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
+        } catch (Exceptions\JWTException $e) {
 
             return response()->json(['token_absent'], $e->getStatusCode());
 
@@ -118,15 +118,15 @@ class DireccionesController extends Controller
                 return response()->json(['user_not_found'], 404);
             }
 
-        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+        } catch (Exceptions\TokenExpiredException $e) {
 
             return response()->json(['token_expired'], $e->getStatusCode());
 
-        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+        } catch (Exceptions\TokenInvalidException $e) {
 
             return response()->json(['token_invalid'], $e->getStatusCode());
 
-        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
+        } catch (Exceptions\JWTException $e) {
 
             return response()->json(['token_absent'], $e->getStatusCode());
 
@@ -165,15 +165,15 @@ class DireccionesController extends Controller
                 return response()->json(['user_not_found'], 404);
             }
 
-        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+        } catch (Exceptions\TokenExpiredException $e) {
 
             return response()->json(['token_expired'], $e->getStatusCode());
 
-        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+        } catch (Exceptions\TokenInvalidException $e) {
 
             return response()->json(['token_invalid'], $e->getStatusCode());
 
-        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
+        } catch (Exceptions\JWTException $e) {
 
             return response()->json(['token_absent'], $e->getStatusCode());
 
@@ -210,15 +210,15 @@ class DireccionesController extends Controller
                 return response()->json(['user_not_found'], 404);
             }
 
-        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+        } catch (Exceptions\TokenExpiredException $e) {
 
             return response()->json(['token_expired'], $e->getStatusCode());
 
-        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+        } catch (Exceptions\TokenInvalidException $e) {
 
             return response()->json(['token_invalid'], $e->getStatusCode());
 
-        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
+        } catch (Exceptions\JWTException $e) {
 
             return response()->json(['token_absent'], $e->getStatusCode());
 

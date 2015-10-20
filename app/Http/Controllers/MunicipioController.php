@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 
 class MunicipioController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *

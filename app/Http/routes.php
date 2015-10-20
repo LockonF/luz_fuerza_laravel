@@ -26,7 +26,7 @@ Route::group(['middleware' => 'cors','prefix' => 'api'], function(Router $router
 
     //Campos de Experiencia
     Route::get('CampoDeExperiencia/{id}',"CampoDeExperienciaController@show");
-
+    Route::get('CampoDeExperiencia',"CampoDeExperienciaController@showAll");
     //Paises
     Route::get('Pais','PaisController@index');
     Route::get('Pais/{id}',"PaisController@show");

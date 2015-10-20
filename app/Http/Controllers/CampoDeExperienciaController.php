@@ -37,8 +37,30 @@ class CampoDeExperienciaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+
     }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     * Show All Campos de Experiencia
+     */
+
+    public function showAll()
+    {
+        $campo = CampoDeExperiencia::get();
+        $campo->load(['AreaDeExperiencia.ExperienciaEspecifica'=>function($q) use (&$ExperienciaEspecifica){
+            $ExperienciaEspecifica = $q->get()->unique();
+        }]);
+        return response()->json(
+            [
+                "msg"=>"success",
+                "campo_de_experiencia"=>$campo->toArray()
+            ],200);
+    }
+
+
+
 
     /**
      * Display the specified resource.

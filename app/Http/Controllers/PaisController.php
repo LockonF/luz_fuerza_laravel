@@ -17,7 +17,10 @@ class PaisController extends Controller
     public function index()
     {
         $paises = \App\Models\Pais::with('EntidadesFederativas')->get();
-        return response()->json(
+
+        $paises->load(['EntidadesFederativas.Municipios'=>function($q) use (&$Municipios){
+            $Municipios = $q->get()->unique();
+        }]);return response()->json(
             [
                 "msg"=>"success",
                 "paises"=>$paises->toArray()
