@@ -16,13 +16,20 @@ class EntidadFederativa extends Model
 
     public function ExperienciaLaboral()
     {
-        return $this->hasOne('App\Models\EntidadFederativa','idEntidadFederativa');
+        return $this->hasMany('App\Models\EntidadFederativa','idEntidadFederativa');
     }
+
+    public function Logro()
+    {
+        return $this->hasMany('\App\Models\Logro','idEntidadFederativa');
+    }
+
 
     public function Municipios()
     {
         return $this->hasMany('App\Models\Municipio','idEstado');
     }
+
 
 
 }

@@ -8,7 +8,7 @@ class Direccion extends Model
 {
     //
     protected $table = 'Direccion';
-    protected $fillable = ['Calle','NumeroExt','NumeroInt','Departamento','CodigoPostal','idMunicipio'];
+    protected $fillable = ['Calle','NumeroExt','NumeroInt','Departamento','CodigoPostal','idMunicipio','Colonia'];
     protected $hidden = ['created_at','updated_at'];
 
 

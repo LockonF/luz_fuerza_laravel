@@ -93,12 +93,24 @@ Route::group(['middleware' => 'cors','prefix' => 'api'], function(Router $router
     //Idiomas del Usuario
     Route::get('IdiomaUsuario','IdiomaUsuarioController@showAll');
     Route::post('IdiomaUsuario','IdiomaUsuarioController@store');
-    Route::put('IdiomaUsuario','IdiomaUsuarioController@update');
+    Route::put('IdiomaUsuario/{id}','IdiomaUsuarioController@update');
     Route::delete('IdiomaUsuario/{id}','IdiomaUsuarioController@destroy');
 
 
     //Estadisticas
     Route::post('Estadisticas/Edades','EstadisticasController@usersByAge');
     Route::post('Estadisticas/Ubicacion','EstadisticasController@usersByLocation');
+
+
+    //Logros
+    Route::get('Logro','LogroController@show');
+    Route::get('Logro/{id}','LogroController@showOne');
+    Route::put('Logro/{id}','LogroController@update');
+    Route::post('Logro','LogroController@store');
+    Route::delete('Logro/{id}','LogroController@destroy');
+
+    //Idiomas
+    Route::get('Idioma','IdiomaController@showAll');
+    Route::get('Idioma/{id}','IdiomaController@show');
 
 });

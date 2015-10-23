@@ -99,7 +99,7 @@ class IdiomaUsuarioController extends Controller
      * Función para actualizar un registro de idioma
      */
 
-    public function update(Request $request)
+    public function update(Request $request,$id)
     {
         try {
 
@@ -123,6 +123,7 @@ class IdiomaUsuarioController extends Controller
 
         $requestData = $request->all();
         $requestData['idUser'] =$user->id;
+        $requestData['idIdioma'] =$id;
         $idiomas = User::whereHas('Idiomas', function ($q) use ($requestData) {
             $q->where('idIdioma',$requestData['idIdioma'])
                 ->where('idEmpleado',$requestData['idUser']);

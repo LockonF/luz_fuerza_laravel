@@ -10,10 +10,8 @@ class Certificacion extends Model
     protected $fillable =
         ['idEmpleado','Nombre','Area','Tipo','Descripcion','InstitucionCertificadora'];
 
-    protected $hidden = ['id'];
-
     public function Usuario(){
-        return $this->belongsTo('\App\User','idUsuario');
+        return $this->belongsTo('\App\User','idEmpleado');
     }
 
 

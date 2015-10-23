@@ -59,8 +59,17 @@ class User extends Model implements AuthenticatableContract,
      */
     public function Certificacion()
     {
-        return $this->hasMany('App\Models\Certificacion','idUsuario');
+        return $this->hasMany('App\Models\Certificacion','idEmpleado');
     }
+    /**
+     *
+     */
+    public function Logro()
+    {
+        return $this->hasMany('\App\Models\Logro','idEmpleado');
+    }
+
+
     /**
      *
      */

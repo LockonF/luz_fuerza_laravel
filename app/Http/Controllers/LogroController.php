@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Certificacion;
+use App\Models\Logro;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Tymon\JWTAuth\Exceptions;
 use JWTAuth;
 
-
-class CertificacionController extends Controller
+class LogroController extends Controller
 {
-
     /**
      * Store a newly created resource in storage.
      *
@@ -41,13 +39,13 @@ class CertificacionController extends Controller
 
         }
 
-        $certificacion = new Certificacion($request->all());
-        return $user->Certificacion()->save($certificacion);
+        $logro = new Logro($request->all());
+        return $user->Logro()->save($logro);
 
     }
 
     /**
-     * Muestra la certificacion de un usuario dado por el parámetro $id
+     * Muestra el logro de un usuario dado por el parámetro $id
      *
      * @param $id
      * @return \Illuminate\Http\JsonResponse
@@ -75,12 +73,12 @@ class CertificacionController extends Controller
 
         }
 
-        $certificacion = Certificacion::where('idEmpleado',$id)->get();
+        $logro = Logro::where('idEmpleado',$id)->get();
 
-        if(!$certificacion->isEmpty())
+        if(!$logro->isEmpty())
         {
             return response()->json([
-                'certificacion'=>$certificacion->toArray()
+                'logro'=>$logro->toArray()
             ],200);
         }
         return response()->json(['user_not_found'], 404);
@@ -95,7 +93,7 @@ class CertificacionController extends Controller
     /**
      * Display the specified resource.
      *
-     * Muestra las certificaciones
+     * Muestra los logros
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -121,10 +119,10 @@ class CertificacionController extends Controller
 
         }
 
-        $certificaciones = Certificacion::where('idEmpleado',$user->id)->get();
+        $logros = Logro::where('idEmpleado',$user->id)->get();
 
         return response()->json([
-            'certificacion'=>$certificaciones->toArray()
+            'logro'=>$logros->toArray()
         ],200);
         //
     }
@@ -132,7 +130,7 @@ class CertificacionController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *Actualiza la certificacion de un usuario dado por el parámetro $id
+     *Actualiza el logro de un usuario dado por el parámetro $id
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -160,13 +158,13 @@ class CertificacionController extends Controller
         }
 
 
-        $success = Certificacion::where('idEmpleado',$user->id)->where('id',$id)->update($request->all());
+        $success = Logro::where('idEmpleado',$user->id)->where('id',$id)->update($request->all());
         if($success)
         {
             return response()->json(['success'],200);
         }
         else{
-            return response()->json(['certificacion_not_found'], 404);
+            return response()->json(['logro_not_found'], 404);
 
         }
 
@@ -175,7 +173,7 @@ class CertificacionController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *Elimina la certificacion de un usuario dado por el parámetro $id
+     * Elimina el logro de un usuario dado por el parámetro $id
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -202,14 +200,14 @@ class CertificacionController extends Controller
         }
 
 
-        $certificacion = Certificacion::where('idEmpleado',$user->id)->where('id',$id)->first();
+        $logro = Logro::where('idEmpleado',$user->id)->where('id',$id)->first();
 
-        if(!is_null($certificacion))
+        if(!is_null($logro))
         {
-            $certificacion->delete();
+            $logro->delete();
             return response()->json('success',200);
         }
-        else return response()->json('certificacion_not_found',404);
+        else return response()->json('logro_not_found',404);
 
 
     }

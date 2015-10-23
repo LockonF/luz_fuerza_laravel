@@ -8,11 +8,10 @@ class ExperienciaLaboral extends Model
 {
     protected $table = 'ExperienciaLaboral';
     protected $fillable =
-        ['idUsuario','idEntidadFederativa','idExperienciaEspecifica','NombreInstitucion','CampoDeExperiencia','AreaDeExperiencia','Jerarquia',
+        ['idUsuario','idEntidadFederativa','idCampoDeExperiencia','idAreaDeExperiencia','idExperienciaEspecifica','NombreInstitucion','CampoDeExperiencia','AreaDeExperiencia','Jerarquia',
         'NombreDelPuesto','RemuneracionBrutaMensual','FechaInicio','FechaTermino','NombreSuperiorInmediato','ApellidoPSuperiorInmediato',
         'ApellidoMSuperiorInmediato','TelefonoSuperiorInmediato'];
 
-    protected $hidden = ['id'];
 
     public function Usuario(){
         return $this->belongsTo('\App\User','idUsuario');
