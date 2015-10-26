@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\InstitucionEducativa;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\Pais;
+use App\Models\InstitucionEducativa;
 
 class InstitucionEducativaController extends Controller
 {
@@ -18,7 +17,7 @@ class InstitucionEducativaController extends Controller
      */
     public function index()
     {
-        $institucionEducativa= \App\Models\InstitucionEducativa::with('id')->get();
+        $institucionEducativa= InstitucionEducativa::with('id')->get();
         return response()->json(
             [
                 "msg"=>"success",
@@ -45,7 +44,7 @@ class InstitucionEducativaController extends Controller
     public function store(Request $request)
     {
 
-        $institucionEducativa = \App\Models\InstitucionEducativa();
+        $institucionEducativa = InstitucionEducativa();
         $institucionEducativa->nombre = $request->nombre;
         $institucionEducativa->siglas = $request->siglas;
         $institucionEducativa->tipo = $request->tipo;
@@ -69,6 +68,35 @@ class InstitucionEducativaController extends Controller
                 "institucionEducativa"=>$institucionEducativa->toArray()
             ],200);
     }
+
+    /**
+     * ShowByLevel
+     *
+     */
+    public function showByLevel($id)
+    {
+
+        switch($id)
+        {
+            case "5":
+                $instituciones = InstitucionEducativa::where('Tipo','Tecnicas')->get();
+                break;
+            case "6":
+                $instituciones = InstitucionEducativa::where('Tipo','Profesional')->get();
+                break;
+            case "7":
+                $instituciones = InstitucionEducativa::where('Tipo','Posgrado')->get();
+                break;
+            default:
+                return response()->json('nivel_not_found',404);
+                break;
+        }
+        return response()->json([
+            'InstitucionEducativa'=>$instituciones->toArray()
+        ],200);
+
+    }
+
 
     /**
      * Show the form for editing the specified resource.

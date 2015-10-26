@@ -10,7 +10,6 @@ class InstitucionEducativa extends Model
     protected $fillable =
         ['Nombre','Siglas','Tipo'];
 
-    protected $hidden = ['id'];
 
     public function Escolaridad(){
         return $this->hasMany('App\Models\Escolaridad','idInstitucionEducativa');

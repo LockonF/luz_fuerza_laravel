@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\Pais;
+use App\Models\Carrera;
 
 class CarreraController extends Controller
 {
@@ -17,7 +17,7 @@ class CarreraController extends Controller
      */
     public function index()
     {
-        $carrera= \App\Models\Carrera::with('id')->get();
+        $carrera= \App\Models\Carrera::get();
         return response()->json(
             [
                 "msg"=>"success",
@@ -68,6 +68,37 @@ class CarreraController extends Controller
                 "carrera"=>$carrera->toArray()
             ],200);
     }
+
+
+    /**
+     * ShowByLevel
+     *
+     */
+    public function showByLevel($id)
+    {
+
+        switch($id)
+        {
+            case "5":
+                $carreras = Carrera::where('Tipo','Tecnicas')->get();
+                break;
+            case "6":
+                $carreras = Carrera::where('Tipo','Profesional')->get();
+                break;
+            case "7":
+                $carreras = Carrera::where('Tipo','Posgrado')->get();
+                break;
+            default:
+                return response()->json('nivel_not_found',404);
+                break;
+        }
+        return response()->json([
+            'Carrera'=>$carreras->toArray()
+        ],200);
+
+    }
+
+
     /**
      * Display the specified resource.
      *

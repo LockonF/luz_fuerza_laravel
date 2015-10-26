@@ -8,7 +8,7 @@ class Escolaridad extends Model
 {
     protected $table = 'Escolaridad';
     protected $fillable =
-        ['idUsuario','idEntidadFederativa','idCarrera','idInstitucionEducativa','NivelDeEstudios','GradoDeAvance','CedulaProfesional',
+        ['idUsuario','idPais','idCarrera','idInstitucionEducativa','NivelDeEstudios','GradoDeAvance','CedulaProfesional',
         'FechaDeInicio','FechaDeTermino'];
 
     protected $hidden = ['id'];
@@ -17,8 +17,8 @@ class Escolaridad extends Model
         return $this->belongsTo('\App\User','idUsuario');
     }
 
-    public function EntidadFederativa(){
-        return $this->belongsTo('\App\Model\EntidadFederativa','idEntidadFederativa');
+    public function Pais(){
+        return $this->belongsTo('\App\Model\Pais','idPais');
     }
 
     public function Carrera()

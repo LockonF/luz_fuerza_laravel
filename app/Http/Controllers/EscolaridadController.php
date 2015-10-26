@@ -42,8 +42,15 @@ class EscolaridadController extends Controller
 
         }
 
-        $escolaridad = new Escolaridad($request->all());
-        return $user->Escolaridad()->save($escolaridad);
+
+        $escolaridad = Escolaridad::where('idUsuario',$user->id)->get();
+        if($escolaridad->isEmpty())
+        {
+            $escolaridad = new Escolaridad($request->all());
+            return $user->Escolaridad()->save($escolaridad);
+        }
+        else return response()->json(['Solo se permite un registro por usuario'],500);
+
 
     }
 
@@ -81,11 +88,10 @@ class EscolaridadController extends Controller
         if(!$escolaridad->isEmpty())
         {
             return response()->json([
-                'msg'=>'Success',
                 'escolaridad'=>$escolaridad->toArray()
             ],200);
         }
-        return response()->json(['user_not_found'], 404);
+        return response()->json(['escolarifad_not_found'], 404);
 
 
 
@@ -125,11 +131,11 @@ class EscolaridadController extends Controller
         $escolaridades = Escolaridad::where('idUsuario',$user->id)->get();
 
         return response()->json([
-           'msg'=>'Success',
             'escolaridad'=>$escolaridades->toArray()
         ],200);
         //
     }
+
 
 
     /**

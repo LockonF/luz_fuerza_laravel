@@ -82,11 +82,14 @@ Route::group(['middleware' => 'cors','prefix' => 'api'], function(Router $router
     Route::get('Municipio/Estado/{id}',"MunicipioController@showByEstado");
 
     //Carrera
+    Route::get('Carrera',"CarreraController@index");
     Route::get('Carrera/{id}',"CarreraController@show");
-    Route::get('Carrrera/Escolaridad/{id}',"CarreraController@showByArea");
+    Route::get('Carrera/Area/{id}',"CarreraController@showByArea");
+    Route::get('Carrera/Nivel/{id}',"CarreraController@showByLevel");
 
     //InstitucionEducativa
     Route::get('InstitucionEducativa/{id}',"InstitucionEducativaController@show");
+    Route::get('InstitucionEducativa/Nivel/{id}',"InstitucionEducativaController@showByLevel");
     Route::get('InstitucionEducativa/Escolaridad/{id}',"InstitucionEducativaController@showByArea");
 
 

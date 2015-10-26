@@ -10,7 +10,6 @@ class Carrera extends Model
     protected $fillable =
         ['NombreCarrera','Tipo','Area'];
 
-    protected $hidden = ['id'];
 
     public function Escolaridad(){
         return $this->hasMany('App\Models\Escolaridad','idCarrera');
