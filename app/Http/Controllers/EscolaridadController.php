@@ -145,7 +145,7 @@ class EscolaridadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         try {
 
@@ -168,7 +168,7 @@ class EscolaridadController extends Controller
         }
 
 
-        $success = Escolaridad::where('idUsuario',$user->id)->where('id',$id)->update($request->all());
+        $success = Escolaridad::where('idUsuario',$user->id)->update($request->all());
         if($success)
         {
             return response()->json(['success'],200);
@@ -187,7 +187,7 @@ class EscolaridadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
         try {
 
@@ -210,7 +210,7 @@ class EscolaridadController extends Controller
         }
 
 
-        $escolaridad = ExperienciaLaboral::where('idUsuario',$user->id)->where('id',$id)->first();
+        $escolaridad = Escolaridad::where('idUsuario',$user->id)->first();
 
         if(!is_null($escolaridad))
         {

@@ -67,9 +67,9 @@ Route::group(['middleware' => 'cors','prefix' => 'api'], function(Router $router
     //Escolaridad
     Route::get('Escolaridad','EscolaridadController@show');
     Route::get('Escolaridad/{id}','EscolaridadController@showOne');
-    Route::put('Escolaridad/{id}','EscolaridadController@update');
+    Route::put('Escolaridad','EscolaridadController@update');
     Route::post('Escolaridad','EscolaridadController@store');
-    Route::delete('Escolaridad/{id}','EscolaridadController@destroy');
+    Route::delete('Escolaridad','EscolaridadController@destroy');
 
     //Entidad Federativa
     Route::get('EntidadFederativa',"EntidadFederativaController@index");

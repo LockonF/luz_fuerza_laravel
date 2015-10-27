@@ -11,7 +11,6 @@ class Escolaridad extends Model
         ['idUsuario','idPais','idCarrera','idInstitucionEducativa','NivelDeEstudios','GradoDeAvance','CedulaProfesional',
         'FechaDeInicio','FechaDeTermino'];
 
-    protected $hidden = ['id'];
 
     public function Usuario(){
         return $this->belongsTo('\App\User','idUsuario');
