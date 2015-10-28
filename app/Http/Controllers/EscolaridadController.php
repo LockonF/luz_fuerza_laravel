@@ -55,52 +55,6 @@ class EscolaridadController extends Controller
     }
 
     /**
-     * Muestra la experiencia laboral de un usuario dado por el parámetro $id
-     *
-     * @param $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-
-    public function showOne($id)
-    {
-        try {
-
-            if (! $user = JWTAuth::parseToken()->authenticate()) {
-                return response()->json(['user_not_found'], 404);
-            }
-
-        } catch (Exceptions\TokenExpiredException $e) {
-
-            return response()->json(['token_expired'], $e->getStatusCode());
-
-        } catch (Exceptions\TokenInvalidException $e) {
-
-            return response()->json(['token_invalid'], $e->getStatusCode());
-
-        } catch (Exceptions\JWTException $e) {
-
-            return response()->json(['token_absent'], $e->getStatusCode());
-
-        }
-
-        $escolaridad = Escolaridad::where('idUsuario',$id)->get();
-
-        if(!$escolaridad->isEmpty())
-        {
-            return response()->json([
-                'escolaridad'=>$escolaridad->toArray()
-            ],200);
-        }
-        return response()->json(['escolarifad_not_found'], 404);
-
-
-
-
-    }
-
-
-
-    /**
      * Display the specified resource.
      *
      * @param  int  $id

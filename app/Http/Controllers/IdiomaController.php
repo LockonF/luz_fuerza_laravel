@@ -16,7 +16,7 @@ class IdiomaController extends Controller
      */
     public function showAll()
     {
-        $idiomas  = Idioma::get();
+        $idiomas  = Idioma::orderBy('NombreIdioma','asc')->get();
         return response()->json($idiomas,200);
     }
     /**

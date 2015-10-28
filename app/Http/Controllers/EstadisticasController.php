@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ExperienciaLaboral;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -18,7 +19,7 @@ class EstadisticasController extends Controller
     {
         $thisYear = intval(date('Y'));
 
-        $ranges = $request->all()['array'];
+        $ranges = $request->all();
 
 
         foreach($ranges as $range)
@@ -26,7 +27,7 @@ class EstadisticasController extends Controller
             $users[] = DatosPersonales::whereYear('FechaNacimiento','>=',$thisYear-$range['maxRange'])->whereYear('FechaNacimiento','<=',$thisYear-$range['minRange'])->count();
         }
 
-        return response()->json(['users'=>$users],200);
+        return response()->json($users,200);
     }
 
     public function usersByLocation(Request $request)
@@ -36,13 +37,53 @@ class EstadisticasController extends Controller
         {
 
             $result[] =\DB::table('Direccion')
-                ->join('Localidad', 'Direccion.idLocalidad', '=', 'Localidad.id')
-                ->join('Municipio', 'Municipio.id', '=', 'Localidad.idMunicipio')
+                ->join('Municipio', 'Municipio.id', '=', 'Direccion.idMunicipio')
                 ->join('EntidadFederativa', 'EntidadFederativa.id', '=', 'Municipio.idEstado')
                 ->select('Direccion.id')
                 ->where('EntidadFederativa.id', $id)->count();
         }
-        return response()->json(['users'=>$result],200);
+        return response()->json($result,200);
 
     }
+
+
+    public function usersByFieldExperience(Request $request,$id)
+    {
+        $result['users'] = \DB::table('ExperienciaLaboral')
+            ->join('ExperienciaEspecifica','ExperienciaLaboral.idExperienciaEspecifica','=','ExperienciaEspecifica.id')
+            ->join('AreaDeExperiencia','ExperienciaEspecifica.idAreaDeExperiencia','=','AreaDeExperiencia.id')
+            ->join('CampoDeExperiencia','AreaDeExperiencia.idCampoDeExperiencia','=','CampoDeExperiencia.id')
+            ->select('ExperienciaLaboral.id')
+            ->where('CampoDeExperiencia.id',$id)->count();
+
+        return response()->json($result,200);
+
+    }
+
+    public function usersByAreaExperience(Request $request,$id)
+    {
+        $result['users'] = \DB::table('ExperienciaLaboral')
+            ->join('ExperienciaEspecifica','ExperienciaLaboral.idExperienciaEspecifica','=','ExperienciaEspecifica.id')
+            ->join('AreaDeExperiencia','ExperienciaEspecifica.idAreaDeExperiencia','=','AreaDeExperiencia.id')
+            ->join('CampoDeExperiencia','AreaDeExperiencia.idCampoDeExperiencia','=','CampoDeExperiencia.id')
+            ->select('ExperienciaLaboral.id')
+            ->where('AreaDeExperiencia.id',$id)->count();
+
+        return response()->json($result,200);
+
+    }
+    public function usersBySpecificExperience(Request $request,$id)
+    {
+        $result['users'] = \DB::table('ExperienciaLaboral')
+            ->join('ExperienciaEspecifica','ExperienciaLaboral.idExperienciaEspecifica','=','ExperienciaEspecifica.id')
+            ->join('AreaDeExperiencia','ExperienciaEspecifica.idAreaDeExperiencia','=','AreaDeExperiencia.id')
+            ->join('CampoDeExperiencia','AreaDeExperiencia.idCampoDeExperiencia','=','CampoDeExperiencia.id')
+            ->select('ExperienciaLaboral.id')
+            ->where('ExperienciaEspecifica.id',$id)->count();
+
+        return response()->json($result,200);
+
+    }
+
+
 }

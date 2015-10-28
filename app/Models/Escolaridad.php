@@ -8,7 +8,7 @@ class Escolaridad extends Model
 {
     protected $table = 'Escolaridad';
     protected $fillable =
-        ['idUsuario','idPais','idCarrera','idInstitucionEducativa','NivelDeEstudios','GradoDeAvance','CedulaProfesional',
+        ['idUsuario','idPais','idCarrera','idInstitucionEducativa','InstitucionEducativa','NivelDeEstudios','GradoDeAvance','CedulaProfesional',
         'FechaDeInicio','FechaDeTermino'];
 
 

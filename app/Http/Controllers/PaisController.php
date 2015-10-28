@@ -16,7 +16,7 @@ class PaisController extends Controller
      */
     public function index()
     {
-        $paises = \App\Models\Pais::with('EntidadesFederativas')->get();
+        $paises = Pais::with('EntidadesFederativas')->get();
 
         $paises->load(['EntidadesFederativas.Municipios'=>function($q) use (&$Municipios){
             $Municipios = $q->get()->unique();
