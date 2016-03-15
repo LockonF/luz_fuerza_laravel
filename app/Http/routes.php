@@ -20,16 +20,34 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'cors','prefix' => 'api'], function(Router $router){
 
+
+    //Validaciones
     Route::post('authenticate', 'TokenAuthController@authenticate');
+    Route::post('validate', 'TokenAuthController@validateUsernameHash');
     Route::get('authenticate', 'TokenAuthController@getAuthenticatedUser');
     Route::post('register', 'TokenAuthController@register');
 
     //Campos de Experiencia
+
+    Route::get('CampoDeExperiencia/Simple','CampoDeExperienciaController@showSimple');
+
     Route::get('CampoDeExperiencia/{id}',"CampoDeExperienciaController@show");
     Route::get('CampoDeExperiencia',"CampoDeExperienciaController@showAll");
+
+    //Areas de Experiencia
+
+    Route::get('CampoDeExperiencia/Areas/{id}','AreaDeExperienciaController@show');
+
+    //ExperienciaEspecifico
+    Route::get('AreaDeExperiencia/Especifico/{id}','AreaDeExperienciaController@showExperienciasEspecificas');
+
+
     //Paises
     Route::get('Pais','PaisController@index');
     Route::get('Pais/{id}',"PaisController@show");
+    Route::get('Pais/EntidadFederativa/{id}','PaisController@showEntidades');
+
+
 
 
     //Datos Personales de Usuario
@@ -101,8 +119,16 @@ Route::group(['middleware' => 'cors','prefix' => 'api'], function(Router $router
     Route::get('Estadisticas/Area/{id}','EstadisticasController@usersByAreaExperience');
     Route::get('Estadisticas/Experiencia/{id}','EstadisticasController@usersBySpecificExperience');
     Route::post('Estadisticas/Edades','EstadisticasController@usersByAge');
-    Route::post('Estadisticas/Ubicacion','EstadisticasController@usersByLocation');
+    Route::post('Estadisticas/Proyeccion','EstadisticasController@usersByAgeProjection');
+    Route::get('Estadisticas/Ubicacion','EstadisticasController@usersByLocation');
+    Route::get('Estadisticas/Educacion','EstadisticasController@usersByEducation');
+    Route::get('Estadisticas/Registros','EstadisticasController@userStats');
+    Route::get('Estadisticas/Sexo','EstadisticasController@usersBySex');
+    Route::get('Estadisticas/Faltantes','EstadisticasController@countMissing');
+    Route::get('Estadisticas/RegistroDatos/{id}','EstadisticasController@usersByRegister');
 
+
+    Route::post('Estadisticas/Combinado','EstadisticasController@combinedStats');
 
     //Logros (lista)
     Route::get('Logro','LogroController@show');
@@ -114,5 +140,23 @@ Route::group(['middleware' => 'cors','prefix' => 'api'], function(Router $router
     //Idiomas
     Route::get('Idioma','IdiomaController@showAll');
     Route::get('Idioma/{id}','IdiomaController@show');
+
+    //Subdirecciones y Gerencias SME
+    Route::get('Subdireccion/','SubdireccionController@index');
+
+    //Cuestionario
+    Route::get('Cuestionario','CuestionarioController@show');
+    Route::get('Cuestionario/Reset','CuestionarioController@reset');
+    Route::post('Cuestionario','CuestionarioController@store');
+
+
+    //Admin
+    Route::get('Admin/User/{id}','AdminController@checkRegistry');
+    Route::get('Admin/User','AdminController@getAllRegistries');
+    Route::get('Admin/Carrera/{id}','AdminController@lookupByCareer');
+
+    //Preguntas
+    Route::get('Pregunta','PreguntaController@showAll');
+    Route::get('Pregunta/{id}','PreguntaController@showStats');
 
 });

@@ -46,16 +46,14 @@ class DatosPersonalesController extends Controller
 
         }
 
-    try{
 
-
-        $datosPersonales = new DatosPersonales($request->all());
-        return $user->DatosPersonales()->save($datosPersonales);
-
-    }catch (FatalErrorException $e)
-    {
-        return response()->json('Internal Server Error',500);
-    }
+        $datosPersonales = DatosPersonales::where('idUsuario',$user->id)->first();
+        if($datosPersonales==null)
+        {
+            $datosPersonales = new DatosPersonales($request->all());
+            return $user->DatosPersonales()->save($datosPersonales);
+        }
+        return response()->json('Solo se permite un registro',500);
 
 
 
@@ -103,8 +101,6 @@ class DatosPersonalesController extends Controller
                 ],404);
 
             }
-
-
     }
 
     /**

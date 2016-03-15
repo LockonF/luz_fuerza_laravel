@@ -8,9 +8,12 @@ class ExperienciaLaboral extends Model
 {
     protected $table = 'ExperienciaLaboral';
     protected $fillable =
-        ['idUsuario','idEntidadFederativa','idCampoDeExperiencia','idAreaDeExperiencia','idExperienciaEspecifica','NombreInstitucion','CampoDeExperiencia','AreaDeExperiencia','Jerarquia',
-        'NombreDelPuesto','RemuneracionBrutaMensual','FechaInicio','FechaTermino','NombreSuperiorInmediato','ApellidoPSuperiorInmediato',
-        'ApellidoMSuperiorInmediato','TelefonoSuperiorInmediato'];
+        [
+            'idUsuario','idEntidadFederativa','idCampoDeExperiencia','idAreaDeExperiencia','idExperienciaEspecifica',
+            'idGerencia','NombreInstitucion','CampoDeExperiencia','AreaDeExperiencia','Jerarquia',
+            'NombreDelPuesto','RemuneracionBrutaMensual','FechaInicio','FechaTermino','NombreSuperiorInmediato',
+            'ApellidoPSuperiorInmediato', 'ApellidoMSuperiorInmediato','TelefonoSuperiorInmediato','Experiencias',
+            'TipoDeExperiencia',];
 
 
     public function Usuario(){

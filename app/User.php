@@ -88,5 +88,12 @@ class User extends Model implements AuthenticatableContract,
 
     }
 
+    /**
+     *
+     */
+    public function Cuestionario()
+    {
+        return $this->hasMany('App\Models\Cuestionario','idUsuario');
+    }
 
 }

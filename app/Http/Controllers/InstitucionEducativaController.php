@@ -79,13 +79,13 @@ class InstitucionEducativaController extends Controller
         switch($id)
         {
             case "5":
-                $instituciones = InstitucionEducativa::where('Tipo','Tecnicas')->get();
+                $instituciones = InstitucionEducativa::where('id','999999')->orWhere('Tipo','Tecnicas')->get();
                 break;
             case "6":
-                $instituciones = InstitucionEducativa::where('Tipo','Profesional')->get();
+                $instituciones = InstitucionEducativa::where('id','999999')->orWhere('Tipo','Profesional')->get();
                 break;
             case "7":
-                $instituciones = InstitucionEducativa::where('Tipo','Posgrado')->get();
+                $instituciones = InstitucionEducativa::where('id','999999')->orWhere('Tipo','Profesional')->get();
                 break;
             default:
                 return response()->json('nivel_not_found',404);

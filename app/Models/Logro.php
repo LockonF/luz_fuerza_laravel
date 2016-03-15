@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Logro extends Model
 {
     protected $table = 'Logro';
-    protected $fillable = ['Logro','Descripcion','DocumentoAval','Fecha','idEntidadFederativa','idEmpleado'];
+    protected $fillable = ['Logro','Descripcion','DocumentoAval','Fecha','idPais','idEmpleado'];
 
     public function User(){
         return $this->belongsTo('\App\User','idEmpleado');
     }
 
-    public function EntidadFederativa()
+    public function Pais()
     {
-        return $this->belongsTo('\App\Models\EntidadFederativa','idEntidadFederativa');
+        return $this->belongsTo('\App\Models\Pais','idPais');
     }
 }

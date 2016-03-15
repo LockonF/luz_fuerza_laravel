@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EntidadFederativa;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -18,29 +19,33 @@ class PaisController extends Controller
     {
         $paises = Pais::with('EntidadesFederativas')->get();
 
-        $paises->load(['EntidadesFederativas.Municipios'=>function($q) use (&$Municipios){
+        $paises->load(['EntidadesFederativas.Municipios' => function ($q) use (&$Municipios) {
             $Municipios = $q->get()->unique();
-        }]);return response()->json(
+        }]);
+        return response()->json(
             [
-                "msg"=>"success",
-                "paises"=>$paises->toArray()
-            ],200);
+                "msg" => "success",
+                "paises" => $paises->toArray()
+            ], 200);
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function create()
+
+    public function showEntidades($id)
     {
+        $pais = EntidadFederativa::where('idPais',$id)->get();
+        return response()->json($pais);
 
     }
+
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -54,54 +59,21 @@ class PaisController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
 
         $pais = Pais::find($id);
-        $pais->load(['EntidadesFederativas.Municipios'=>function($q) use (&$Municipios){
+        $pais->load(['EntidadesFederativas.Municipios' => function ($q) use (&$Municipios) {
             $Municipios = $q->get()->unique();
-    }]);
+        }]);
         return response()->json(
             [
-                "msg"=>"success",
-                "pais"=>$pais->toArray()
-            ],200);
+                "msg" => "success",
+                "pais" => $pais->toArray()
+            ], 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
