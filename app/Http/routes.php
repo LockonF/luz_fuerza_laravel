@@ -18,7 +18,33 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
 Route::group(['middleware' => 'cors','prefix' => 'api'], function(Router $router){
+
+    //Clasificadores
+    Route::get('Clasificador','ClasificadorController@getClasificadores');
+    Route::post('Clasificador','ClasificadorController@addClasificador');
+    Route::put('Clasificador/{id}','ClasificadorController@updateClasificador')->where(['id'=>'[0-9]+']);
+    Route::delete('Clasificador/{id}','ClasificadorController@deleteClasificador')->where(['id'=>'[0-9]+']);
+    Route::get('Clasificador/Especifico/{idClasificador}','ClasificadorController@getClasificadoresEspecificos')
+        ->where(['idClasificador'=>'[0-9]+']);
+    //Clasificadores Específicos
+    Route::post('ClasificadorEspecifico','ClasificadorEspecificoController@store');
+    Route::put('ClasificadorEspecifico/{id}','ClasificadorEspecificoController@update')->where(['id'=>'[0-9]+']);
+    Route::delete('ClasificadorEspecifico/{id}','ClasificadorEspecificoController@destroy')
+        ->where(['id'=>'[0-9]+']);
+
+    //Inventarios
+    Route::get('Inventario','InventarioController@show');
+    Route::post('Inventario','InventarioController@store');
+    Route::put('Inventario/{id}','InventarioController@update')->where(['id'=>'[0-9]+']);
+    Route::delete('Inventario/{id}','InventarioController@destroy')->where(['id'=>'[0-9]+']);
+    Route::get('Inventario/ClasificadorEspecifico/{id}','InventarioController@inventarioByClasificadorEspecifico')
+        ->where(['id'=>'[0-9]+']);
+    //Ubicaciones
+    Route::get('Ubicacion','UbicacionController@show');
+
 
 
     //Validaciones
@@ -26,6 +52,8 @@ Route::group(['middleware' => 'cors','prefix' => 'api'], function(Router $router
     Route::post('validate', 'TokenAuthController@validateUsernameHash');
     Route::get('authenticate', 'TokenAuthController@getAuthenticatedUser');
     Route::post('register', 'TokenAuthController@register');
+    Route::get('RefreshToken','TokenAuthController@refreshToken');
+
 
     //Campos de Experiencia
 
@@ -158,5 +186,10 @@ Route::group(['middleware' => 'cors','prefix' => 'api'], function(Router $router
     //Preguntas
     Route::get('Pregunta','PreguntaController@showAll');
     Route::get('Pregunta/{id}','PreguntaController@showStats');
+
+    //Libro de Socios
+    Route::get('Certificado/Socio/{idUsuario}','CertificadoSocioController@indexBySocio');
+    Route::post('Certificado/Socio','CertificadoSocioController@store');
+    Route::delete('Certificado/{id}','CertificadoSocioController@destroy');
 
 });

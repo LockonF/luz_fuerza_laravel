@@ -133,18 +133,25 @@ class EstadisticasController extends Controller
         try{
 
         TokenAuthController::checkUser('Admin');
-        $entidades = EntidadFederativa::where('idPais',1)->lists();
+        $entidades = EntidadFederativa::where('idPais',1)->lists('id');
         $result = array();
 
 
             $tempResult =DB::table('Direccion')
                 ->join('Municipio', 'Municipio.id', '=', 'Direccion.idMunicipio')
                 ->join('EntidadFederativa', 'EntidadFederativa.id', '=', 'Municipio.idEstado')
-                ->select(DB::raw('COUNT(Direccion.id) as Data, EntidadFederativa.Abrev as Labels'))
+                ->select(DB::raw('COUNT(Direccion.id) as Data, EntidadFederativa.Abrev as Label'))
                 ->whereIn('EntidadFederativa.id', $entidades)
-                ->groupBy('Direccion')
-                ->order()
+                ->groupBy('Label')
+                ->orderBy('Data','desc')
+                ->limit('5')
                 ->get();
+
+            foreach($tempResult as $item)
+            {
+                $result['labels'][]= $item->Label;
+                $result['data'][]= $item->Data;
+            }
 
 
 

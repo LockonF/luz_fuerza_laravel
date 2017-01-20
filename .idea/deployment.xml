@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="Server SME">
+  <component name="PublishConfigData" serverName="SME">
     <serverData>
-      <paths name="GemaLMS">
+      <paths name="SME">
         <serverdata>
           <mappings>
-            <mapping deploy="/luz_fuerza_laravel" local="$PROJECT_DIR$" web="/luz_fuerza_laravel/public" />
-          </mappings>
-        </serverdata>
-      </paths>
-      <paths name="Server SME">
-        <serverdata>
-          <mappings>
-            <mapping deploy="/" local="$PROJECT_DIR$" web="/ipnsme_2015/luz_fuerza_laravel" />
+            <mapping deploy="/luz_fuerza_laravel" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
